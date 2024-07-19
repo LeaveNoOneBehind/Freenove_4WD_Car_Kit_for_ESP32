@@ -26,13 +26,13 @@ void loop()
   if (Get_Photosensitive() < (photosensitive_init_value - photosensitive_sensitivity))
   {
     wheel(2,100);
-    Motor_Move(-2000, -2000, 2000, 2000);
+    Motor_Move(2000, 2000, -2000, -2000);
   }
   //There is a light source on the right side of the car
   else if (Get_Photosensitive() > (photosensitive_init_value + photosensitive_sensitivity))
   {
     wheel(1,100);
-    Motor_Move(2000, 2000, -2000, -2000);
+    Motor_Move(-2000, -2000, 2000, 2000);
   }
   //The light is in the middle of the car
   else

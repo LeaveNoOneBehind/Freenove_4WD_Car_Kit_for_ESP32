@@ -13,8 +13,8 @@
 #define CAMERA_MODEL_WROVER_KIT
 #include "camera_pins.h"
 
-const char* ssid_Router     =   "********";
-const char* password_Router =   "********";
+const char* ssid_Router     =   "UCU_Guest";
+const char* password_Router =   "";
 const char *ssid_AP         =   "Sunshine";
 const char *password_AP     =   "Sunshine";
 
