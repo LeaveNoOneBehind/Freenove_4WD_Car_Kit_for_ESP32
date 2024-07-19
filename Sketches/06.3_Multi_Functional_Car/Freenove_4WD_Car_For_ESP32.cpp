@@ -141,9 +141,8 @@ void Motor_Move(int m1_speed, int m2_speed, int m3_speed, int m4_speed)
 void Buzzer_Setup(void)
 {
   pinMode(PIN_BUZZER, OUTPUT);
-  ledcSetup(BUZZER_CHN, BUZZER_FREQUENCY, 10);
-  ledcAttachPin(PIN_BUZZER, BUZZER_CHN);
-  ledcWriteTone(BUZZER_CHN, 0);
+  ledcAttach(PIN_BUZZER, BUZZER_FREQUENCY, 10);
+  ledcWriteTone(PIN_BUZZER, 0);
   delay(10);
 }
 
@@ -153,19 +152,19 @@ void Buzzer_Variable(bool enable, int frequency)
   if (enable == 1)
   {
     frequency = constrain(frequency, 0, 10000);
-    ledcWriteTone(BUZZER_CHN, frequency);
+    ledcWriteTone(PIN_BUZZER, frequency);
   }
   else
-    ledcWriteTone(BUZZER_CHN, 0);
+    ledcWriteTone(PIN_BUZZER, 0);
 }
 
 //Buzzer alarm function
 void Buzzer_Alarm(bool enable)
 {
   if (enable == 0)
-    ledcWriteTone(BUZZER_CHN, 0);
+    ledcWriteTone(PIN_BUZZER, 0);
   else
-    ledcWriteTone(BUZZER_CHN, BUZZER_FREQUENCY);
+    ledcWriteTone(PIN_BUZZER, BUZZER_FREQUENCY);
 }
 
 //Buzzer Alert function
@@ -177,14 +176,14 @@ void Buzzer_Alert(int beat, int rebeat)
   {
     for (int i = 0; i < beat; i++)
     {
-      ledcWriteTone(BUZZER_CHN, BUZZER_FREQUENCY);
+      ledcWriteTone(PIN_BUZZER, BUZZER_FREQUENCY);
       delay(100);
-      ledcWriteTone(BUZZER_CHN, 0);
+      ledcWriteTone(PIN_BUZZER, 0);
       delay(100);
     }
     delay(500);
   }
-  ledcWriteTone(BUZZER_CHN, 0);
+  ledcWriteTone(PIN_BUZZER, 0);
 }
 
 ////////////////////Battery drive area/////////////////////////////////////
@@ -233,12 +232,12 @@ void Light_Car(int mode)
   {
     if (Get_Photosensitive() < (light_init_value - 100))
     {
-      Motor_Move(-2000, -2000, 2000, 2000);
+      Motor_Move(2000, 2000, -2000, -2000);
       Emotion_SetMode(4);
     }
     else if (Get_Photosensitive() > (light_init_value + 100))
     {
-      Motor_Move(2000, 2000, -2000, -2000);
+      Motor_Move(-2000, -2000, 2000, 2000);
       Emotion_SetMode(5);
     }
     else
@@ -264,7 +263,7 @@ PCF8574 TRACK_SENSOR(PCF8574_ADDRESS);
 //Trace module initialization
 void Track_Setup(void)
 {
-  TRACK_SENSOR.begin(PCF8574_SDA, PCF8574_SCL);
+  Wire.begin(PCF8574_SDA, PCF8574_SCL);
 }
 
 //Tracking module reading
@@ -287,7 +286,7 @@ void Track_Car(int mode)
       case 2:   //010
       case 5:   //101
         Emotion_SetMode(3);
-        Motor_Move(SPEED_LV1, SPEED_LV1, SPEED_LV1, SPEED_LV1);    //Move Forward
+        Motor_Move(-SPEED_LV1, -SPEED_LV1, -SPEED_LV1, -SPEED_LV1);    //Move Forward
         break;
       case 0:   //000
       case 7:   //111
@@ -297,12 +296,12 @@ void Track_Car(int mode)
       case 1:   //001
       case 3:   //011
         Emotion_SetMode(4);
-        Motor_Move(-SPEED_LV3, -SPEED_LV3, SPEED_LV4, SPEED_LV4);  //Turn Left
+        Motor_Move(SPEED_LV3, SPEED_LV3, -SPEED_LV4, -SPEED_LV4);  //Turn Left
         break;
       case 4:   //100
       case 6:   //110
         Emotion_SetMode(5);
-        Motor_Move(SPEED_LV4, SPEED_LV4 , - SPEED_LV3, -SPEED_LV3);//Turn Right
+        Motor_Move(-SPEED_LV4, -SPEED_LV4 , SPEED_LV3, SPEED_LV3);//Turn Right
         break;
 
       default:

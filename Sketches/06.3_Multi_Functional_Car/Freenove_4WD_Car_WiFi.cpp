@@ -26,7 +26,7 @@ void WiFi_Setup(bool WiFi_Mode)
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid_Router, password_Router);
     WiFi.setSleep(false);
-    WiFi.setAutoConnect(true);
+    // WiFi.setAutoConnect(true);
     WiFi.setAutoReconnect(true);
 
     Serial.print("\nWaiting for WiFi... ");

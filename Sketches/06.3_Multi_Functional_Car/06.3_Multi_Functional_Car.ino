@@ -46,9 +46,9 @@ void setup() {
   Light_Setup();            //Light initialization
   Track_Setup();            //Track initialization
 
-  disableCore0WDT();        //Turn off the watchdog function in kernel 0
-  xTaskCreateUniversal(loopTask_Camera, "loopTask_Camera", 8192, NULL, 0, NULL, 0);
-  xTaskCreateUniversal(loopTask_WTD, "loopTask_WTD", 8192, NULL, 0, NULL, 0);
+  // disableCore0WDT();        //Turn off the watchdog function in kernel 0
+  xTaskCreateUniversal(loopTask_Camera, "loopTask_Camera", 10240, NULL, 0, NULL, 0);
+  xTaskCreateUniversal(loopTask_WTD, "loopTask_WTD", 10240, NULL, 0, NULL, 0);
 }
 
 void loop() {
@@ -83,7 +83,7 @@ void loop() {
           if (paramters[1] == 0 && paramters[3] == 0)
             Motor_Move(0, 0, 0, 0);//Stop the car
           else //If the parameters are not equal to 0
-            Motor_Move(paramters[1], paramters[1], paramters[3], paramters[3]);
+            Motor_Move(-paramters[1], -paramters[1], -paramters[3], -paramters[3]);
         }
         if (CmdArray[0] == CMD_SERVO) {//Network control servo motor movement command
           if (paramters[1] == 0)
