@@ -7,26 +7,28 @@
 
 void setup()
 {
-  PCA9685_Setup();       //Initializes the chip that controls the motor
+  PCA9685_Setup();       // ініціалізація контролера моторів
 }
 
 void loop()
 {
-  Motor_Move(2000, 2000, 2000, 2000);     //go forward
+  Motor_Move(-2000, -2000, -2000, -2000);     // рухатись вперед
   delay(1000);
-  Motor_Move(0, 0, 0, 0);                 //stop
-  delay(1000);
-  Motor_Move(-2000, -2000, -2000, -2000); //go back
-  delay(1000);
-  Motor_Move(0, 0, 0, 0);                 //stop
+  Motor_Move(0, 0, 0, 0);                    // зупинитись
   delay(1000);
 
-  Motor_Move(-2000, -2000, 2000, 2000);   //turn left
+  Motor_Move(2000, 2000, 2000, 2000);     // рухатись назад
   delay(1000);
-  Motor_Move(0, 0, 0, 0);                 //stop
+  Motor_Move(0, 0, 0, 0);                 // зупинитись
   delay(1000);
-  Motor_Move(2000, 2000, -2000, -2000);   //turn right
+
+  Motor_Move(-2000, -2000, 2000, 2000);   // повернути праворуч
   delay(1000);
-  Motor_Move(0, 0, 0, 0);                 //stop
+  Motor_Move(0, 0, 0, 0);                 // зупинитись
+  delay(1000);
+  
+  Motor_Move(2000, 2000, -2000, -2000);   // повернути ліворуч
+  delay(1000);
+  Motor_Move(0, 0, 0, 0);                 // зупинитись
   delay(1000);
 }
