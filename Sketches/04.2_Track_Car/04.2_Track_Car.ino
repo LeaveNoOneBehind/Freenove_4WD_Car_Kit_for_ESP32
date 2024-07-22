@@ -28,7 +28,7 @@ void loop()
     case 2:   //010
     case 5:   //101
       showArrow(1, 100);
-      Motor_Move(SPEED_LV1, SPEED_LV1, SPEED_LV1, SPEED_LV1);    //Move Forward
+      Motor_Move(-SPEED_LV1, -SPEED_LV1, -SPEED_LV1, -SPEED_LV1);    //Move Forward
       break;
     case 0:   //000
     case 7:   //111
@@ -38,12 +38,12 @@ void loop()
     case 4:   //100
     case 6:   //110
       wheel(2, 100);
-      Motor_Move(SPEED_LV4, SPEED_LV4 , - SPEED_LV3, -SPEED_LV3);//Turn Right
+      Motor_Move(-SPEED_LV4, -SPEED_LV4 , SPEED_LV3, SPEED_LV3);//Turn Right
       break;
     case 1:   //001
     case 3:   //011
       wheel(1, 100);
-      Motor_Move(-SPEED_LV3, -SPEED_LV3, SPEED_LV4, SPEED_LV4);  //Turn Left
+      Motor_Move(SPEED_LV3, SPEED_LV3, -SPEED_LV4, -SPEED_LV4);  //Turn Left
       break;
     default:
       break;
