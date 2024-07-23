@@ -7,34 +7,34 @@
 #include <Arduino.h>
 #include "Freenove_4WD_Car_For_ESP32.h"
 
-int photosensitive_sensitivity = 100;//Set the sensitivity of the photosensitive resistor trolley
-int photosensitive_init_value = 0;   //Set the car's initial environment ADC value
+int photosensitive_sensitivity = 100;// виставте чутливість фоторезистора   
+int photosensitive_init_value = 0;   // початкове значення освітленості
 
 void setup()
 {
   Emotion_Setup();
   Buzzer_Setup();
-  Photosensitive_Setup();  //Photosensitive initialization
-  PCA9685_Setup();           //Initialize PCA9685 to control motor
+  Photosensitive_Setup();    // ініціалізація фоторезистора
+  PCA9685_Setup();           // ініціалізація контролера моторів
   photosensitive_init_value = Get_Photosensitive();
-  //Buzzer_Alert(1,1);       //The buzzer beeps to prompt the user to start playing
+  //Buzzer_Alert(1,1);       // пищалка буде пищати, сповіщаючи про те, що можна починати "грати" з машинкою
 }
 
 void loop()
 {
-  //There is a light source on the left side of the car
+  // є джерело світла по ліву сторону від машини
   if (Get_Photosensitive() < (photosensitive_init_value - photosensitive_sensitivity))
   {
     wheel(2,100);
-    Motor_Move(2000, 2000, -2000, -2000);
+    Motor_Move(-2000, -2000, 2000, 2000);
   }
-  //There is a light source on the right side of the car
+  // є джерело світла по праву сторону від машини
   else if (Get_Photosensitive() > (photosensitive_init_value + photosensitive_sensitivity))
   {
     wheel(1,100);
-    Motor_Move(-2000, -2000, 2000, 2000);
+    Motor_Move(2000, 2000, -2000, -2000);
   }
-  //The light is in the middle of the car
+  // джерело світла прямо світить на машинку
   else
   {
     eyesBlink(100);

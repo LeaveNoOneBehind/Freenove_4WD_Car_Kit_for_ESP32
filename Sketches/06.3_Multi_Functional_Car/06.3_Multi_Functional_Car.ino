@@ -20,105 +20,117 @@ int paramters[8];
 bool videoFlag = 0;
 
 void WiFi_Init() {
-  ssid_Router     =   "********";    //Modify according to your router name
-  password_Router =   "********";    //Modify according to your router password
-  ssid_AP         =   "Sunshine";    //ESP32 turns on an AP and calls it Sunshine
-  password_AP     =   "Sunshine";    //Set your AP password for ESP32 to Sunshine
-  frame_size      =    FRAMESIZE_CIF;//400*296
+  ssid_Router     =   "********";    // поміняйте на назву роутера
+  password_Router =   "********";    // поміняйте на пароль до нього
+  ssid_AP         =   "Sunshine";    // ESP32 включить точку доступу з відповідним іменем
+  password_AP     =   "Sunshine";    // виставте пароль для ESP32
+  frame_size      =    FRAMESIZE_CIF;// 400*296
 }
 
 WiFiServer server_Cmd(4000);
 WiFiServer server_Camera(7000);
 
 void setup() {
-  Buzzer_Setup();           //Buzzer initialization
+  Buzzer_Setup();           // ініціалізація пищалки
   Serial.begin(115200);
   Serial.setDebugOutput(true);
-  WiFi_Init();              //WiFi paramters initialization
-  WiFi_Setup(1);            //Start AP Mode. If you want to connect to a router, change 1 to 0.
-  server_Cmd.begin(4000);   //Start the command server
-  server_Camera.begin(7000);//Turn on the camera server
+  WiFi_Init();              // ініціалізація параметрів WIFI
+  WiFi_Setup(1);            // запуск режиму точки доступу. Якщо хочете підключитись до роутера - поміняйте 1 на 0
+  server_Cmd.begin(4000);   // запуск командного серверу
+  server_Camera.begin(7000);// запуск камери
 
-  cameraSetup();            //Camera initialization
-  Emotion_Setup();          //Emotion initialization
-  WS2812_Setup();           //WS2812 initialization
-  PCA9685_Setup();          //PCA9685 initialization
-  Light_Setup();            //Light initialization
-  Track_Setup();            //Track initialization
+  cameraSetup();            // ініціалізація камери
+  Emotion_Setup();          // ініціалізація "емоції"
+  WS2812_Setup();           // ініціалізація світлодіодної стрічки
+  PCA9685_Setup();          // ініціалізація контролеру для моторів
+  Light_Setup();            // ініціалізація модуля для стеження за джерелом світла
+  Track_Setup();            // ініціалізація модуля для стеження за лінією
 
-  // disableCore0WDT();        //Turn off the watchdog function in kernel 0
   xTaskCreateUniversal(loopTask_Camera, "loopTask_Camera", 10240, NULL, 0, NULL, 0);
   xTaskCreateUniversal(loopTask_WTD, "loopTask_WTD", 10240, NULL, 0, NULL, 0);
 }
 
 void loop() {
-  WiFiClient client = server_Cmd.available();                 //listen for incoming clients
-  if (client) {                                               //if you get a client
+  WiFiClient client = server_Cmd.available();                 // пошук клієнтів wifi
+  if (client) {                                               // якщо клієнт підключився
     Serial.println("Cmd_Server connected to a client.");
-    while (client.connected()) {                              //loop while the client's connected
-      if (client.available()) {                               //if there's bytes to read from the client
-        String inputStringTemp = client.readStringUntil('\n');//Read the command by WiFi
-        Serial.println(inputStringTemp);                      //Print out the command received by WiFi
+    while (client.connected()) {                              // повторювати поки клієнт підключений
+      if (client.available()) {                               // якщо є інформація для зчитування від клієнта
+        String inputStringTemp = client.readStringUntil('\n');// зчитати команду по WIFI
+        Serial.println(inputStringTemp);                      // вивести команду отриману по WIFI
         Get_Command(inputStringTemp);
 
-        if (CmdArray[0] == CMD_LED_MOD)//Set the display mode of car colored lights
+        if (CmdArray[0] == CMD_LED_MOD) { // включити/виключити світлодіоди
           WS2812_SetMode(paramters[1]);
-        if (CmdArray[0] == CMD_LED) //Set the color and brightness of the car lights
+        }
+        if (CmdArray[0] == CMD_LED) { // виставити колір і яскравість світлоіодів
           WS2812_Set_Color_1(paramters[1], paramters[2], paramters[3], paramters[4]);
-        if (CmdArray[0] == CMD_MATRIX_MOD)//Set the display mode of the LED matrix
+        }
+        if (CmdArray[0] == CMD_MATRIX_MOD) {// включити/виключити LED матрицю
           Emotion_SetMode(paramters[1]);
-        if (CmdArray[0] == CMD_VIDEO)//Video transmission command
+        }
+        if (CmdArray[0] == CMD_VIDEO) {// команда для передачі відео
           videoFlag = paramters[1];
-        if (CmdArray[0] == CMD_BUZZER) //Buzzer control command
+        }
+        if (CmdArray[0] == CMD_BUZZER) { // команда для контролю пищалки
           Buzzer_Variable(paramters[1], paramters[2]);
-        if (CmdArray[0] == CMD_POWER) {//Power query command
+        }
+        if (CmdArray[0] == CMD_POWER) { // команда, яка повертає напругу батарейок
           float battery_voltage = Get_Battery_Voltage();
           client.print(CMD_POWER);
           client.print(INTERVAL_CHAR);
           client.print(battery_voltage);
           client.print(ENTER);
         }
-        if (CmdArray[0] == CMD_MOTOR) {//Network control car movement command
+        if (CmdArray[0] == CMD_MOTOR) {// контроль машинки по мережі
           Car_SetMode(0);
-          if (paramters[1] == 0 && paramters[3] == 0)
-            Motor_Move(0, 0, 0, 0);//Stop the car
-          else //If the parameters are not equal to 0
-            Motor_Move(-paramters[1], -paramters[1], -paramters[3], -paramters[3]);
+          if (paramters[1] == 0 && paramters[3] == 0) {
+            Motor_Move(0, 0, 0, 0);// зупинити машинку
+          }
+          else {  // якщо параметр не дорівнює 0
+            Motor_Move(paramters[1], paramters[1], paramters[3], paramters[3]);
+          }
         }
-        if (CmdArray[0] == CMD_SERVO) {//Network control servo motor movement command
-          if (paramters[1] == 0)
+        if (CmdArray[0] == CMD_SERVO) {// контроль сервомоторів по мережі
+          if (paramters[1] == 0) {
             Servo_1_Angle(paramters[2]);
-          else if (paramters[1] == 1)
+          }
+          else if (paramters[1] == 1) {
             Servo_2_Angle(paramters[2]);
+          }
         }
-        if (CmdArray[0] == CMD_CAMERA) {//Network control servo motor movement command
+        if (CmdArray[0] == CMD_CAMERA) {// контроль сервомоторів по мережі
           Servo_1_Angle(paramters[1]);
           Servo_2_Angle(paramters[2]);
         }
-        if (CmdArray[0] == CMD_LIGHT) { //Light seeking car command
-          if (paramters[1] == 1)
+        if (CmdArray[0] == CMD_LIGHT) { // команда для стеження за джерелом світла
+          if (paramters[1] == 1) {
             Car_SetMode(1);
-          else if (paramters[1] == 0)
+          }
+          else if (paramters[1] == 0) {
             Car_SetMode(0);
+          }
         }
-        else if (CmdArray[0] == CMD_TRACK) { //Tracking car command
-          if (paramters[1] == 1)
+        else if (CmdArray[0] == CMD_TRACK) { // команда для стеження за лінією
+          if (paramters[1] == 1) {
             Car_SetMode(2);
-          else if (paramters[1] == 0)
+          }
+          else if (paramters[1] == 0) {
             Car_SetMode(0);
+          }
         }
-        if (CmdArray[0] == CMD_CAR_MODE) { //Car command Mode
+        if (CmdArray[0] == CMD_CAR_MODE) { // команда рухатись
           Car_SetMode(paramters[1]);
         }
-        //Clears the command array and parameter array
+        // очистити масиви команд і параметрів
         memset(CmdArray, 0, sizeof(CmdArray));
         memset(paramters, 0, sizeof(paramters));
       }
-      Emotion_Show(emotion_task_mode);//Led matrix display function
-      WS2812_Show(ws2812_task_mode);//Car color lights display function
-      Car_Select(carFlag);//ESP32 Car mode selection function
+      Emotion_Show(emotion_task_mode);// функція для виставлення "емоції" на LED матирицю
+      WS2812_Show(ws2812_task_mode);// функція для включення світлодіодів
+      Car_Select(carFlag);// функція для вибору команди для ESP32
     }
-    client.stop();//close the connection:
+    client.stop();// відключити зв'язок з клієнтом по мережі
     Serial.println("Command Client Disconnected.");
     ESP.restart();
   }
@@ -126,12 +138,12 @@ void loop() {
 
 void loopTask_Camera(void *pvParameters) {
   while (1) {
-    WiFiClient client = server_Camera.available();//listen for incoming clients
-    if (client) {//if you get a client
+    WiFiClient client = server_Camera.available();// пошук клієнтів
+    if (client) {// якщо клієнт приєднався
       Serial.println("Camera_Server connected to a client.");
       if (client.connected()) {
         camera_fb_t * fb = NULL;
-        while (client.connected()) {//loop while the client's connected
+        while (client.connected()) {// повторювати поки клієнт під'єднаний
           if (videoFlag == 1) {
             fb = esp_camera_fb_get();
             if (fb != NULL) {
@@ -147,7 +159,7 @@ void loopTask_Camera(void *pvParameters) {
             }
           }
         }
-        //close the connection:
+        // відключити зв'язок
         client.stop();
         Serial.println("Camera Client Disconnected.");
         ESP.restart();
@@ -159,33 +171,20 @@ void loopTask_Camera(void *pvParameters) {
 void Get_Command(String inputStringTemp)
 {
   int string_length = inputStringTemp.length();
-  for (int i = 0; i < 8; i++) {//Parse the command received by WiFi
+  for (int i = 0; i < 8; i++) {// розпарсити команду, отриману по WIFI 
     int index = inputStringTemp.indexOf(INTERVAL_CHAR);
     if (index < 0) {
       if (string_length > 0) {
-        CmdArray[i] = inputStringTemp;         //Get command
-        paramters[i] = inputStringTemp.toInt();//Get parameters
+        CmdArray[i] = inputStringTemp;         // отримати команду
+        paramters[i] = inputStringTemp.toInt();// отрмати параметри
       }
       break;
     }
     else {
-      string_length -= index;                                //Count the remaining words
-      CmdArray[i] = inputStringTemp.substring(0, index);     //Get command
-      paramters[i] = CmdArray[i].toInt();                    //Get parameters
-      inputStringTemp = inputStringTemp.substring(index + 1);//Update string
+      string_length -= index;                                // кількість "слів", що залишилась
+      CmdArray[i] = inputStringTemp.substring(0, index);     // отрмати команду
+      paramters[i] = CmdArray[i].toInt();                    // отрмати параметри
+      inputStringTemp = inputStringTemp.substring(index + 1);// оновити стрічку
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-//
