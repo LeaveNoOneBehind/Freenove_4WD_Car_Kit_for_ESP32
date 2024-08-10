@@ -2,6 +2,7 @@
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WiFiAP.h>
+#include "Freenove_Buzzer.h"
 
 char* ssid_Router     =   "********";    //Modify according to your router name
 char* password_Router =   "********";    //Modify according to your router password

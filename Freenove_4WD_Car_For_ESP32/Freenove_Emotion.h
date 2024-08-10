@@ -5,6 +5,8 @@
 #define EMOTION_SDA     13
 #define EMOTION_SCL     14
 
+extern int emotion_task_mode;
+
 void Emotion_Setup();                            //Initialize
 void eyesRotate(int delay_ms);                   //Turn the eyes-1
 void eyesBlink(int delay_ms);                    //Wink the eyes-2

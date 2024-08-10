@@ -8,6 +8,9 @@ int time_before=0;      //Record each non-blocking time
 int time_count=0;       //Record the number of non-blocking times
 int time_flag=0;        //Record the blink time
 
+int emotion_time_next = 0;
+int emotion_time_now = 0;
+int emotion_count = 0;
 
 //clear all
 void clearEmtions(void)

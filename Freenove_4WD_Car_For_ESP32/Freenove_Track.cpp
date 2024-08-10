@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include "Freenove_Track.h"
+#include <PCF8574.h>
+#include <Wire.h>
 
 unsigned char sensorValue[4] = {0};
 PCF8574 TRACK_SENSOR(PCF8574_ADDRESS);

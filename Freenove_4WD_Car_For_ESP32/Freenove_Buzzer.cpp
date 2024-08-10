@@ -29,3 +29,24 @@ void Buzzer_Alert(int beat, int rebeat)
     }
     ledcWriteTone(PIN_BUZZER, 0);
 }
+
+//Buzzer variable frequency
+void Buzzer_Variable(bool enable, int frequency)
+{
+  if (enable == 1)
+  {
+    frequency = constrain(frequency, 0, 10000);
+    ledcWriteTone(PIN_BUZZER, frequency);
+  }
+  else
+    ledcWriteTone(PIN_BUZZER, 0);
+}
+
+//Buzzer alarm function
+void Buzzer_Alarm(bool enable)
+{
+  if (enable == 0)
+    ledcWriteTone(PIN_BUZZER, 0);
+  else
+    ledcWriteTone(PIN_BUZZER, BUZZER_FREQUENCY);
+}

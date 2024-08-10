@@ -8,6 +8,8 @@
 
 void Buzzer_Setup(void);                //Buzzer initialization
 void Buzzer_Alert(int beat, int rebeat);//Buzzer alarm function
+void Buzzer_Alarm(bool enable);          //Buzzer alarm function
+void Buzzer_Variable(bool enable, int frequency);//Buzzer variable frequency(Parameter 1, enabling signal, parameter 2, frequency value)
 
 
 #endif //FREENOVE_BUZZER_H
