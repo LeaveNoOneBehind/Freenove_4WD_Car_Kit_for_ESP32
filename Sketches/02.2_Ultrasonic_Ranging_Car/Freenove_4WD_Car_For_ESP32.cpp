@@ -160,8 +160,7 @@ void Motor_Move(int m1_speed, int m2_speed, int m3_speed, int m4_speed)
 void Buzzer_Setup(void)
 {
   pinMode(PIN_BUZZER, OUTPUT);
-  ledcSetup(BUZZER_CHN, BUZZER_FREQUENCY, 10);
-  ledcAttachPin(PIN_BUZZER, BUZZER_CHN);
+  ledcAttach(PIN_BUZZER, BUZZER_FREQUENCY, 10);
   ledcWriteTone(BUZZER_CHN, 0);
   delay(10);
 }
