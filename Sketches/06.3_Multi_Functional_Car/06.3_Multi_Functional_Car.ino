@@ -125,6 +125,7 @@ void loop() {
         memset(paramters, 0, sizeof(paramters));
       }
       Emotion_Show(emotion_task_mode);// функція для виставлення "емоції" на LED матирицю
+      WS2812_Reconfigure();
       WS2812_Show(ws2812_task_mode);// функція для включення світлодіодів
       Car_Select(carFlag);// функція для вибору команди для ESP32
     }
