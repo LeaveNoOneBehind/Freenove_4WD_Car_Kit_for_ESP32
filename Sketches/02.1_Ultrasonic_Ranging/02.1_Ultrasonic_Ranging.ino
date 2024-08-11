@@ -8,28 +8,28 @@
 #include "Freenove_4WD_Car_For_ESP32.h"
 
 void setup() {
-  Serial.begin(115200);//Open the serial port and set the baud rate to 115200
-  Ultrasonic_Setup();  //Ultrasonic module initialization
-  PCA9685_Setup();       //Servo motor initialization
-  Servo_1_Angle(90);   //Set the initial value of Servo 1 to 90 degrees
-  Servo_2_Angle(90);   //Set the initial value of Servo 2 to 90 degrees
-  delay(500);          //Wait for the servo to arrive at the specified location
+  Serial.begin(115200); // Підключити Serial і встановити швидкість передачі на 115200
+  Ultrasonic_Setup();   // Ініціалізація ультразвукового модуля
+  PCA9685_Setup();      // Ініціалізація серводвигуна
+  Servo_1_Angle(90);    // Встановити початкове значення серводвигуна 1 на 90 градусів
+  Servo_2_Angle(90);    // Встановити початкове значення серводвигуна 2 на 90 градусів
+  delay(500);           // Затримка, щоб дочекатися, поки серводвигун займе потрібне положення
 }
 
 void loop() {
-  Servo_1_Angle(150);  //Turn servo 1 to 150 degrees
-  Serial.print("Distance: " + String(Get_Sonar()) + "\n");//Print ultrasonic distance
+  Servo_1_Angle(150);   // Повернути серводвигун 1 на 150 градусів
+  Serial.print("Distance: " + String(Get_Sonar()) + "\n"); // Вивести на екран відстань, виміряну ультразвуковим датчиком
   delay(500);
 
-  Servo_1_Angle(90);   //Turn servo 1 to 90 degrees
-  Serial.print("Distance: " + String(Get_Sonar()) + "\n");//Print ultrasonic distance
+  Servo_1_Angle(90);    // Повернути серводвигун 1 на 90 градусів
+  Serial.print("Distance: " + String(Get_Sonar()) + "\n"); // Вивести на екран відстань, виміряну ультразвуковим датчиком
   delay(500);
 
-  Servo_1_Angle(30);   //Turn servo 1 to 30 degrees
-  Serial.print("Distance: " + String(Get_Sonar()) + "\n");//Print ultrasonic distance
+  Servo_1_Angle(30);    // Повернути серводвигун 1 на 30 градусів
+  Serial.print("Distance: " + String(Get_Sonar()) + "\n"); // Вивести на екран відстань, виміряну ультразвуковим датчиком
   delay(500);
 
-  Servo_1_Angle(90);   //Turn servo 1 to 90 degrees
-  Serial.print("Distance: " + String(Get_Sonar()) + "\n");//Print ultrasonic distance
+  Servo_1_Angle(90);    // Повернути серводвигун 1 на 90 градусів
+  Serial.print("Distance: " + String(Get_Sonar()) + "\n"); // Вивести на екран відстань, виміряну ультразвуковим датчиком
   delay(500);
 }

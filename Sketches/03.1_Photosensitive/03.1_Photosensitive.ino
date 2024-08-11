@@ -4,19 +4,19 @@
   Auther      : www.freenove.com
   Modification: 2020/12/18
 **********************************************************************/
-#define PHOTOSENSITIVE_PIN 33 //Define the pins that ESP32 reads photosensitive
-int photosensitiveADC;        //Defines a variable to store ADC values
+#define PHOTOSENSITIVE_PIN 33 // Пін до якого під'єднаний фоточутливий сенсор
+int photosensitiveADC;        // Змінна для зберігання значень ADC, отримані від фоточутливого сенсора
 
 void setup()
 {
-  pinMode(PHOTOSENSITIVE_PIN, INPUT);//Configure the pins for input mode
-  Serial.begin(115200);              //Initialize the serial port and set the baud rate to 115200
+  pinMode(PHOTOSENSITIVE_PIN, INPUT); // Налаштувати пін для режиму вводу
+  Serial.begin(115200);              // Ініціалізувати Serial і встановити швидкість передачі на 115200
 }
 
 void loop()
 {
-  photosensitiveADC = analogRead(PHOTOSENSITIVE_PIN);//Read the photosensitive resistance value
+  photosensitiveADC = analogRead(PHOTOSENSITIVE_PIN); // Зчитати значення фоточутливого сенсора
   Serial.print("photosensitiveADC: ");
-  Serial.println(photosensitiveADC);                 //Print photosensitive resistance value
+  Serial.println(photosensitiveADC);                 // Вивести отримане значення
   delay(500);
 }

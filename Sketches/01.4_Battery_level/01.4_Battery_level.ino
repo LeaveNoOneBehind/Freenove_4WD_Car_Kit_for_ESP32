@@ -7,14 +7,14 @@
 #include "Freenove_4WD_Car_For_ESP32.h"
 
 void setup() {
-  Serial.begin(115200);                     //Set the Serial Baud rate
+  Serial.begin(115200);                     // Встановити швидкість передачі даних по Serial
 }
 
 void loop() {
   Serial.print("Battery ADC : ");
-  Serial.println(Get_Battery_Voltage_ADC());//Gets the battery ADC value
+  Serial.println(Get_Battery_Voltage_ADC());// Отримати "сире" значення ADC батареї
   Serial.print("Battery Voltage : ");
-  Serial.print(Get_Battery_Voltage());      //Get the battery voltage value
+  Serial.print(Get_Battery_Voltage());      // Отримати перетворене значення напруги батареї у вольтах
   Serial.println("V");
   delay(300);
 }

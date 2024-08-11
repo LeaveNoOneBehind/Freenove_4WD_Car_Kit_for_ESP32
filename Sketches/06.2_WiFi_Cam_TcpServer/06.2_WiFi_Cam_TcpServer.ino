@@ -13,8 +13,8 @@
 #define CAMERA_MODEL_WROVER_KIT
 #include "camera_pins.h"
 
-const char* ssid_Router     =   "UCU_Guest";
-const char* password_Router =   "";
+const char* ssid_Router     =   "********";
+const char* password_Router =   "********";
 const char *ssid_AP         =   "Sunshine";
 const char *password_AP     =   "Sunshine";
 
@@ -62,11 +62,11 @@ void setup() {
 }
 //task loop uses core 1.
 void loop() {
-  WiFiClient client = server_Camera.available();           // listen for incoming clients
-  if (client) {                                            // if you get a client,
-    Serial.println("Camera Server connected to a client.");// print a message out the serial port
-    String currentLine = "";                               // make a String to hold incoming data from the client
-    while (client.connected()) {                           // loop while the client's connected
+  WiFiClient client = server_Camera.available();           // Очікувати клієнтів на під'єднання
+  if (client) {                                            // Якщо клієнт підключився,
+    Serial.println("Camera Server connected to a client.");// Написати відповідне повідомлення в Serial monitor
+    String currentLine = "";                               // Створення стрічки для отримання вхідних даних
+    while (client.connected()) {                           // Виконувати поки клієнт під'єднаний
       camera_fb_t * fb = NULL;
       while (client.connected()) {
         fb = esp_camera_fb_get();
