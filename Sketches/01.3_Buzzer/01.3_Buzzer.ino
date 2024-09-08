@@ -4,11 +4,11 @@
   Auther      : www.freenove.com
   Modification: 2020/12/18
 **********************************************************************/
-#include "Freenove_4WD_Car_For_ESP32.h"
+#include <Freenove_4WD_Car_For_ESP32.h>
 
 void setup() {
-  Buzzer_Setup();    //Buzzer initialization function
-  Buzzer_Alert(4, 3);//Control the buzzer to sound 3 times, 4 sounds each time
+  Buzzer_Setup();    // Функція ініціалізації пищалки
+  Buzzer_Alert(4, 3);// Налаштування пищалки, таким чином, щоб були 4 короткі звукові сигнали, що повторюються 3 рази
 }
 
 void loop() {

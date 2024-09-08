@@ -5,10 +5,10 @@
   Modification: 2020/12/18
 **********************************************************************/
 #include <Arduino.h>
-#include "Freenove_4WD_Car_For_ESP32.h"
+#include <Freenove_4WD_Car_For_ESP32.h>
 
 void setup() {
-  Serial.begin(115200); //set baud rate
+  Serial.begin(115200); // Ініціалізація Serial і виставлення швидкості передачі на 115200
   Track_Setup();
 }
 

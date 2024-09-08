@@ -1,20 +1,18 @@
-#include <Arduino.h>
-#include "Freenove_VK16K33_Lib_For_ESP32.h"
-#include "Freenove_4WD_Car_Emotion.h"
+#ifndef EMOTIONS_H
+#define EMOTIONS_H
 
-//Turn eyes clockwise
 byte eyeRotate1[][8]  = {
   0x00, 0x3C, 0x4E, 0x4E, 0x7E, 0x7E, 0x3C, 0x00,
   0x00, 0x3C, 0x66, 0x66, 0x7E, 0x7E, 0x3C, 0x00,
   0x00, 0x3C, 0x72, 0x72, 0x7E, 0x7E, 0x3C, 0x00,
-  0x00, 0x3C, 0x7E, 0x72, 0x72, 0x7E, 0x3C, 0x00,
+  0x00, 0x3C, 0x7E, 0x72, 0x72, 0x7E, 0x3C, 0x00,//
   0x00, 0x3C, 0x7E, 0x7E, 0x72, 0x72, 0x3C, 0x00,
   0x00, 0x3C, 0x7E, 0x7E, 0x66, 0x66, 0x3C, 0x00,
   0x00, 0x3C, 0x7E, 0x7E, 0x4E, 0x4E, 0x3C, 0x00,
-  0x00, 0x3C, 0x7E, 0x4E, 0x4E, 0x7E, 0x3C, 0x00,
+  0x00, 0x3C, 0x7E, 0x4E, 0x4E, 0x7E, 0x3C, 0x00,//
 };
 
-//Turn eyes counterclockwise
+//Turn your eyes counterclockwise
 byte eyeRotate2[][8] = {
   0x00, 0x3C, 0x72, 0x72, 0x7E, 0x7E, 0x3C, 0x00,
   0x00, 0x3C, 0x66, 0x66, 0x7E, 0x7E, 0x3C, 0x00,
@@ -26,7 +24,6 @@ byte eyeRotate2[][8] = {
   0x00, 0x3C, 0x7E, 0x72, 0x72, 0x7E, 0x3C, 0x00,
 };
 
-//Blink eyes
 byte eyeBlink[][8] = {
   0x00, 0x00, 0x3C, 0x66, 0x42, 0x66, 0x3C, 0x00,
   0x00, 0x00, 0x3C, 0x7E, 0x42, 0x66, 0x3C, 0x00,
@@ -34,14 +31,18 @@ byte eyeBlink[][8] = {
   0x00, 0x00, 0x3C, 0x7E, 0x42, 0x66, 0x3C, 0x00,
   0x00, 0x00, 0x3C, 0x7E, 0x7E, 0x7E, 0x3C, 0x00,
 };
+byte eyeBlink1[][8] = {
+  0x00, 0x18, 0x24, 0x5A, 0x42, 0x3C, 0x00, 0x00,
+  0x00, 0x18, 0x24, 0x42, 0x42, 0x3C, 0x00, 0x00,
+  0x00, 0x18, 0x24, 0x5A, 0x42, 0x3C, 0x00, 0x00,
+  0x00, 0x18, 0x24, 0x42, 0x42, 0x3C, 0x00, 0x00,
+};
 
-//keep smile
 byte eyeSmile[][8] = {
   0x00, 0x00, 0x18, 0x24, 0x42, 0x00, 0x00, 0x00,
   0x00, 0x18, 0x24, 0x42, 0x00, 0x00, 0x00, 0x00,
 };
 
-//cry-left
 byte eyeCry1[][8] = {
   0x00, 0x00, 0x7E, 0x3C, 0x00, 0x00, 0x00, 0x00,
   0x00, 0x00, 0x7E, 0x3C, 0x18, 0x00, 0x00, 0x00,
@@ -55,7 +56,6 @@ byte eyeCry1[][8] = {
   0x00, 0x00, 0x7E, 0x3C, 0x00, 0x00, 0x00, 0x00,
 };
 
-//cry-right
 byte eyeCry2[][8] = {
   0x00, 0x00, 0x7E, 0x3C, 0x00, 0x00, 0x00, 0x00,
   0x00, 0x00, 0x7E, 0x3C, 0x00, 0x00, 0x00, 0x00,
@@ -69,7 +69,75 @@ byte eyeCry2[][8] = {
   0x00, 0x00, 0x7E, 0x3C, 0x00, 0x00, 0x00, 0x00,
 };
 
-//wheel-left
+#define  A  15
+byte arrow_up[8][8] =
+{
+  {0, 0, 0, A, A, 0, 0, 0},
+  {0, 0, A, A, A, A, 0, 0},
+  {0, A, 0, A, A, 0, A, 0},
+  {0, 0, 0, A, A, 0, 0, 0},
+  {0, 0, 0, A, A, 0, 0, 0},
+  {0, 0, 0, A, A, 0, 0, 0},
+  {0, 0, 0, A, A, 0, 0, 0},
+  {0, 0, 0, A, A, 0, 0, 0},
+};
+byte arrow_dowm[8][8] =
+{
+  {0, 0, 0, A, A, 0, 0, 0},
+  {0, 0, 0, A, A, 0, 0, 0},
+  {0, 0, 0, A, A, 0, 0, 0},
+  {0, 0, 0, A, A, 0, 0, 0},
+  {0, 0, 0, A, A, 0, 0, 0},
+  {0, A, 0, A, A, 0, A, 0},
+  {0, 0, A, A, A, A, 0, 0},
+  {0, 0, 0, A, A, 0, 0, 0},
+};
+byte arrow_left[8][8] =
+{
+  {0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, A, 0, 0, 0, 0, 0},
+  {0, A, 0, 0, 0, 0, 0, 0},
+  {A, A, A, A, A, A, A, A},
+  {A, A, A, A, A, A, A, A},
+  {0, A, 0, 0, 0, 0, 0, 0},
+  {0, 0, A, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0},
+};
+byte arrow_right[8][8] =
+{
+  {0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, A, 0, 0},
+  {0, 0, 0, 0, 0, 0, A, 0},
+  {A, A, A, A, A, A, A, A},
+  {A, A, A, A, A, A, A, A},
+  {0, 0, 0, 0, 0, 0, A, 0},
+  {0, 0, 0, 0, 0, A, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0},
+};
+byte car_left[][8] =
+{
+  {0, 0, 0, 0, 0, 0, 0, 0},
+  {0, A, A, A, 0, A, A, A},
+  {0, 0, A, 0, 0, 0, A, 0},
+  {A, A, A, A, A, A, A, 0},
+  {A, A, A, A, A, A, A, 0},
+  {0, 0, A, 0, 0, 0, A, 0},
+  {0, A, A, A, 0, A, A, A},
+  {0, 0, 0, 0, 0, 0, 0, 0},
+};
+
+byte car_right[][8] =
+{
+  {0, 0, 0, 0, 0, 0, 0, 0},
+  {A, A, A, 0, A, A, A, 0},
+  {0, A, 0, 0, 0, A, 0, 0},
+  {0, A, A, A, A, A, A, A},
+  {0, A, A, A, A, A, A, A},
+  {0, A, 0, 0, 0, A, 0, 0},
+  {A, A, A, 0, A, A, A, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0},
+};
+
 byte wheel_left[][8] =
 {
   0x18, 0x10, 0x10, 0x9F, 0xF9, 0x08, 0x08, 0x18,
@@ -77,12 +145,33 @@ byte wheel_left[][8] =
   0x0C, 0x08, 0x88, 0xF8, 0x1F, 0x11, 0x10, 0x30,
 };
 
-//wheel-right
 byte wheel_right[][8] =
 {
   0x18, 0x08, 0x08, 0xF9, 0x9F, 0x10, 0x10, 0x18,
   0x04, 0x42, 0xA4, 0x18, 0x18, 0x25, 0x42, 0x20,
   0x30, 0x10, 0x11, 0x1F, 0xF8, 0x88, 0x08, 0x0C,
+};
+
+byte I_love_you[][8] =
+{
+  0x00, 0xE0, 0x42, 0x47, 0x47, 0x43, 0xE1, 0x00,
+  0x00, 0x05, 0x45, 0xE5, 0xE2, 0xC2, 0x82, 0x00,
+};
+
+byte save_water_left[][8] =
+{
+  0xFE, 0x82, 0xAA, 0xEE, 0x82, 0xBA, 0xAA, 0xFE,
+  0xFE, 0x82, 0xAA, 0xEE, 0x82, 0xBA, 0xAA, 0xFE,
+  0xFE, 0x82, 0xAA, 0xEE, 0x82, 0xBA, 0xAA, 0xFE,
+  0xFE, 0x82, 0xAA, 0xEE, 0x82, 0xBA, 0xAA, 0xFE,
+};
+
+byte save_water_right[][8] =
+{
+  0x70, 0x20, 0x7E, 0x22, 0x02, 0x8A, 0x8A, 0x77,
+  0x70, 0x20, 0x7E, 0x22, 0x22, 0x8A, 0x8A, 0x77,
+  0x70, 0x20, 0x7E, 0x22, 0x02, 0xAA, 0x8A, 0x77,
+  0x70, 0x20, 0x7E, 0x22, 0x02, 0x8A, 0xAA, 0x77,
 };
 
 //static emotion -left
@@ -137,183 +226,11 @@ byte static_emotion_right[][8] =
   0x1C, 0x22, 0x42, 0x48, 0x20, 0x18, 0xC0, 0x40
 };
 
-//clear
+
 byte clearEmotion[][8] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-Freenove_ESP32_VK16K33 matrix = Freenove_ESP32_VK16K33();
-int emotion_time_next = 0;
-int emotion_time_now = 0;
-int emotion_count = 0;
-
-//rotate eyes
-void eyesRotate(int delay_ms)
-{
-  int count = sizeof(eyeRotate1) / sizeof(eyeRotate1[0]);
-  emotion_time_next = millis();
-  if (emotion_time_next - emotion_time_now >= delay_ms)
-  {
-    emotion_time_now = emotion_time_next;
-    matrix.showStaticArray(eyeRotate1[emotion_count], eyeRotate2[emotion_count]);
-    emotion_count++;
-    if (emotion_count >= count)
-      emotion_count = 0;
-  }
-}
-
-//Blink eyes
-void eyesBlink(int delay_ms)
-{
-  emotion_time_next = millis();
-  if (emotion_time_next - emotion_time_now >= delay_ms)
-  {
-    emotion_time_now = emotion_time_next;
-    emotion_count++;
-    if (emotion_count <= 10)
-      matrix.showStaticArray(eyeBlink[0], eyeBlink[0]);
-    else if (emotion_count > 10)
-    {
-      int count = sizeof(eyeBlink) / sizeof(eyeBlink[0]);
-      matrix.showStaticArray(eyeBlink[(emotion_count - 11)], eyeBlink[(emotion_count - 11)]);
-      if ((emotion_count - 10) >= count)
-        emotion_count = 0;
-    }
-  }
-}
-
-//smile
-void eyesSmile(int delay_ms)
-{
-  int count = sizeof(eyeSmile) / sizeof(eyeSmile[0]);
-  emotion_time_next = millis();
-  if (emotion_time_next - emotion_time_now >= delay_ms)
-  {
-    emotion_time_now = emotion_time_next;
-    matrix.showStaticArray(eyeSmile[emotion_count], eyeSmile[emotion_count]);
-    emotion_count++;
-    if (emotion_count >= count)
-      emotion_count = 0;
-  }
-}
-
-//cry
-void eyesCry(int delay_ms)
-{
-  int count = sizeof(eyeCry1) / sizeof(eyeCry1[0]);
-  emotion_time_next = millis();
-  if (emotion_time_next - emotion_time_now >= delay_ms)
-  {
-    emotion_time_now = emotion_time_next;
-    matrix.showStaticArray(eyeCry1[emotion_count], eyeCry2[emotion_count]);
-    emotion_count++;
-    if (emotion_count >= count)
-      emotion_count = 0;
-  }
-}
-
-//wheel
-void wheel(int mode, int delay_ms)
-{
-  if (mode == 1)
-  {
-    int count = sizeof(wheel_left) / sizeof(wheel_left[0]);
-    emotion_time_next = millis();
-    if (emotion_time_next - emotion_time_now >= delay_ms)
-    {
-      emotion_time_now = emotion_time_next;
-      matrix.showStaticArray(wheel_left[emotion_count], wheel_left[emotion_count]);
-      emotion_count++;
-      if (emotion_count >= count)
-        emotion_count = 0;
-    }
-  }
-  if (mode == 2)
-  {
-    int count = sizeof(wheel_right) / sizeof(wheel_right[0]);
-    emotion_time_next = millis();
-    if (emotion_time_next - emotion_time_now >= delay_ms)
-    {
-      emotion_time_now = emotion_time_next;
-      matrix.showStaticArray(wheel_right[emotion_count], wheel_right[emotion_count]);
-      emotion_count++;
-      if (emotion_count >= count)
-        emotion_count = 0;
-    }
-  }
-}
-
-//show static emotion
-void staticEmtions(int emotion)
-{
-  int count = sizeof(static_emotion_left) / sizeof(static_emotion_left[0]);
-  emotion = constrain(emotion, 0, count-1);
-  matrix.showStaticArray(static_emotion_left[emotion], static_emotion_right[emotion]);
-}
-
-//clear all
-void clearEmtions(void)
-{
-  emotion_count = 0;
-  int count = sizeof(clearEmotion) / sizeof(clearEmotion[0]);
-  for (int i = 0; i < count; i++)
-  {
-    matrix.showStaticArray(clearEmotion[i], clearEmotion[i]);
-  }
-}
-
-//initialize HT16K33
-void Emotion_Setup()
-{
-  matrix.init(EMOTION_ADDRESS, EMOTION_SDA, EMOTION_SCL);
-  matrix.setBrightness(15);
-  emotion_time_now = millis();
-}
-
-int emotion_task_mode = 0;
-//Emotion show
-void Emotion_Show(int mode)
-{
-  if (mode == 0)
-    clearEmtions();
-  else if (mode == 1)
-    eyesRotate(150);   
-  else if (mode == 2)
-    eyesCry(200); 
-  else if (mode == 3)
-    eyesSmile(200);                  
-  else if (mode == 4)
-    wheel(2, 100);
-  else if (mode == 5)
-    wheel(1, 100);
-  else if (mode == 6)
-    eyesBlink(100);    
-}
-
-//Emotion set mode
-void Emotion_SetMode(int mode)
-{
-  if (mode <= 6)
-    emotion_task_mode = mode;
-  else if (mode >= 7)
-  {
-    emotion_task_mode = 7;
-    int emotion_flag = millis() % 22;
-    Serial.println("emotion_flag:"+String(emotion_flag));
-    staticEmtions(emotion_flag);
-  }
-}
 
 
-
-
-
-
-
-
-
-
-
-
-
-//
+#endif //EMOTIONS_H

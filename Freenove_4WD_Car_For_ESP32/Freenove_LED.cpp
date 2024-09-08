@@ -1,9 +1,9 @@
 #include <Arduino.h>
-#include "Freenove_4WD_Car_WS2812.h"
+#include "Freenove_LED.h"
 
 int ws2812_task_mode = 0;
-int ws2812_strip_time_now;
-int ws2812_strip_time_next;
+int ws2812_strip_time_now = 0;
+int ws2812_strip_time_next = 0;
 unsigned char ws2812_strip_color_1[12][3];
 unsigned char ws2812_strip_color_2[12][3];
 
@@ -154,13 +154,20 @@ void ws2812_rainbow(void)
 //WS2812 initialization function
 void WS2812_Setup(void)
 {
+  pinMode(WS2812_PIN, OUTPUT);
   ws2812_strip.begin();
   ws2812_strip.setBrightness(50);
   ws2812_close();
   WS2812_Set_Color_1(4095, 0, 0, 100);
   WS2812_Set_Color_2(4095, 0, 0, 0);
   ws2812_strip_time_now = millis();
+}
 
+void WS2812_Reconfigure(void)
+{
+  pinMode(WS2812_PIN, OUTPUT);
+  ws2812_strip.begin();
+  ws2812_strip.setBrightness(50);
 }
 
 //WS2812 set mode

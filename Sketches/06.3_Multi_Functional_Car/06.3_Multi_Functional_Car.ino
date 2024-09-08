@@ -10,10 +10,8 @@
 #include <WiFiClient.h>
 #include <WiFiAP.h>
 #include "esp_camera.h"
-#include "Freenove_4WD_Car_WiFi.h"
-#include "Freenove_4WD_Car_Emotion.h"
-#include "Freenove_4WD_Car_WS2812.h"
-#include "Freenove_4WD_Car_For_ESP32.h"
+
+#include <Freenove_4WD_Car_For_ESP32.h>
 
 String CmdArray[8];
 int paramters[8];
@@ -43,7 +41,7 @@ void setup() {
   Emotion_Setup();          // ініціалізація "емоції"
   WS2812_Setup();           // ініціалізація світлодіодної стрічки
   PCA9685_Setup();          // ініціалізація контролеру для моторів
-  Light_Setup();            // ініціалізація модуля для стеження за джерелом світла
+  Photosensitive_Setup();   // ініціалізація модуля для стеження за джерелом світла
   Track_Setup();            // ініціалізація модуля для стеження за лінією
 
   xTaskCreateUniversal(loopTask_Camera, "loopTask_Camera", 10240, NULL, 0, NULL, 0);
@@ -127,6 +125,7 @@ void loop() {
         memset(paramters, 0, sizeof(paramters));
       }
       Emotion_Show(emotion_task_mode);// функція для виставлення "емоції" на LED матирицю
+      WS2812_Reconfigure();
       WS2812_Show(ws2812_task_mode);// функція для включення світлодіодів
       Car_Select(carFlag);// функція для вибору команди для ESP32
     }
